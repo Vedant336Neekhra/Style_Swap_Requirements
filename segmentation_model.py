@@ -6,8 +6,8 @@ import cv2
 import torchvision.transforms as transforms
 
 
-class SegModel(nn.Module,ckpt_path):  # todo: move to models
-    def __init__(self) -> None:
+class SegModel(nn.Module):  # todo: move to models
+    def __init__(self,ckpt_path) -> None:
         super().__init__()
         self.model = deeplabv3_resnet50(pretrained=False, num_classes=3, pretrained_backbone=True)
         ckpt = ckpt_path
