@@ -4,7 +4,7 @@ import torchvision.transforms as TF
 import numpy as np
 import clip
 
-clip_model, preprocess = clip.load('RN50')
+clip_model, preprocess = clip.load('RN50x4')
 clip_model.eval()
 
 def CLIP_encode_text(text_list:list) -> torch.Tensor:
