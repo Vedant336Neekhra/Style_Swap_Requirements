@@ -35,8 +35,8 @@ def for_model(image_path):
     ])
     tensor_image = transform(image)
     return tensor_image.view(-1,3,256,256)
-def semantic_loss(Ig,real_image_path,device):
-    model = SegModel()
+def semantic_loss(ckpt_path,Ig,real_image_path,device):
+    model = SegModel(ckpt_path)
     model = model.to(device)
     I = for_model(real_image_path)
     I=I.to(device)
