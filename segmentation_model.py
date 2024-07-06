@@ -6,11 +6,11 @@ import cv2
 import torchvision.transforms as transforms
 
 
-class SegModel(nn.Module):  # todo: move to models
+class SegModel(nn.Module,ckpt_path):  # todo: move to models
     def __init__(self) -> None:
         super().__init__()
         self.model = deeplabv3_resnet50(pretrained=False, num_classes=3, pretrained_backbone=True)
-        ckpt = '/content/checkpoint/segmentator.pt'
+        ckpt = ckpt_path
         ckpt = torch.load(ckpt, map_location='cpu')['state']
         ckpt = {k: v for k, v in ckpt.items() if k != 'loss.weight'}
         self.load_state_dict(ckpt)
