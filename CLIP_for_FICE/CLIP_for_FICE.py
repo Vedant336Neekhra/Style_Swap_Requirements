@@ -27,8 +27,8 @@ def CLIP_encode_image(image_list, raw_image:bool=False):
     else:
         transform = TF.Compose([
             TF.Resize(size=224, interpolation=TF.InterpolationMode.BICUBIC, max_size=None, antialias=True)
-            # TF.CenterCrop(size=(224,224)),
-            # TF.Normalize([0.48145466, 0.4578275, 0.40821073], [0.26862954, 0.26130258, 0.27577711])
+            TF.CenterCrop(size=(224,224)),
+            TF.Normalize([0.48145466, 0.4578275, 0.40821073], [0.26862954, 0.26130258, 0.27577711])
         ])
         img_input = transform(image_list).to(device)
         # img_input = image_list.to(device)
@@ -39,5 +39,5 @@ def CLIP_encode_image(image_list, raw_image:bool=False):
 def CLIP_loss(text_list, image_list, raw_image:bool=False):
     txt_embed = CLIP_encode_text(text_list)
     img_embed = CLIP_encode_image(image_list, raw_image)
-    similarity = torch.mul(txt_embed, img_embed).sum(dim=-1)
-    return (1 - similarity).mean()
+    similarity = img_embed @ txt_embed.T
+    return (1 - similarity).sum()
