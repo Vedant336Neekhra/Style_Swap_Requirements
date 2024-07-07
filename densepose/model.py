@@ -5,21 +5,19 @@ import os
 from typing import List
 import torch
 
-from detectron2.detectron2.config.config import get_cfg
-from detectron2.detectron2.engine.defaults import DefaultPredictor
-from detectron2.detectron2.structures.instances import Instances
-from detectron2.detectron2.structures.boxes import Boxes
+from detectron2.config import get_cfg
+from detectron2.engine.defaults import DefaultPredictor
+from detectron2.structures.instances import Instances
+from detectron2.structures.boxes import Boxes
 
 from .densepose import add_densepose_config
-
-
 
 def setup_config(config_fpath: str, args: argparse.Namespace):
     cfg = get_cfg()
     add_densepose_config(cfg)
     cfg.merge_from_file(config_fpath)
     cfg.merge_from_list(args.opts)
-    cfg.MODEL.WEIGHTS = 'checkpoints/densepose.pkl'
+    cfg.MODEL.WEIGHTS = '/content/Style_Swap_Requirements/checkpoints/checkpoints/densepose.pkl'
     cfg.freeze()
     return cfg
 
